@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Movie Reviews Data Project</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <style>
+    /* Remove the navbar's default margin-bottom and rounded borders */ 
+    .navbar {
+      margin-bottom: 0;
+      border-radius: 0;
+      background-color: black;
+      color: white;
+    }
+    
+    /* Set height of the grid so .sidenav can be 100% (adjust as needed) */
+    .row.content {height: 450px}
+    
+    /* Set gray background color and 100% height */
+    .sidenav {
+      padding-top: 20px;
+      background-color: blue;
+      height: 100%;
+      color: white;
+    }
+    
+    /* Set black background color, white text and some padding */
+    footer {
+      background-color: black;
+      color: white;
+      padding: 15px;
+    }
+    
+    /* On small screens, set height to 'auto' for sidenav and grid */
+    @media screen and (max-width: 767px) {
+      .sidenav {
+        height: auto;
+        padding: 15px;
+      }
+      .row.content {height:auto;} 
+    }
+  </style>
+</head>
+<body>
+
+
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    
+    <div class="navbar-header">
+      
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>                        
+      
+      </button>
+      
+      <a class="navbar-brand" href="https://s-media-cache-ak0.pinimg.com/736x/b6/b3/59/b6b35977aebd2ec893d5fe739ad83d04.jpg">Lazaro Alvarez and Trevor Norberg</a>
+    
+    </div>
+    
+    <div class="collapse navbar-collapse" id="myNavbar">
+      
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="https://www.nytimes.com/section/movies"><span class="glyphicon glyphicon-log-in"></span>NYT Movies!</a></li>
+      
+      </ul>
+    
+    </div>
+  
+  </div>
+
+</nav>
+  
+<div class="container-fluid text-center">    
+  
+  <div class="row content">
+    
+    <div class="col-sm-2 sidenav">
+      <p><a href="https://developer.nytimes.com/movie_reviews_v2.json">API Console NYT</a></p>
+      <p><h1>Our Data Project</h1></p>
+      <p>
+        
+      </p>
+    </div>
+    
+    <div class="col-sm-8 text-left"> 
+      <h1>Search the NYT Movie Review Database</h1>
+      
+      
+      <div id="form">
+        <p>
+            Enter a search term.
+            <br>
+            </p>
+        <input id="txtQuery" type="text" placeholder="Enter your search term"></input>
+        <button type="button" id="btnSearch" >Search</button>
+    </div>
+    
+    <!-- a div to store the results -->
+    <div id="results">
+        
+        
+        
+    </div>
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    
+        <script>
+        
+        var nytData;
+        
+        $(function() {
+            
+            var baseUrl = "https://api.nytimes.com/svc/movies/v2/reviews/search.json";
+            
+            var url = baseUrl + "?api-key=" + "9998e118cf414531ac1f077b76185b44";
+            
+            //console.log(url);
+            
+            $("#btnSearch").on("click", function() {
+                  
+                  $("#results").html("");
+                  
+                  var searchTerm = $("#txtQuery").val();
+                  
+                  var searchUrl = url + "&sort=newest&q=" + searchTerm;
+                  
+                  console.log(searchUrl);
+                  
+                  $.getJSON(searchUrl)
+                    .done(function(data){
+                       
+                       console.log(data);
+                       nytData = data;
+                       
+                       $.each(data.results, function(index, value){
+                            
+                            //console.log(value.summary_date);
+                            $("#results").append("<h2>"
+                                + value.headline
+                                + "</h2>"
+                                 + "<br>"
+                                + "<p>" 
+                                + value.publication_date 
+                                + "<br>" 
+                                + value.summary_short
+                                + "</p>");
+                        })
+                    })
+                   
+            });
+            
+            
+            
+            
+        })
+        
+        
+    
+    
+    </script>
+    
+      
+      </div>
+    </div>
+  </div>
+
+
+<footer class="container-fluid text-center">
+  <p>Made in 2017</p>
+</footer>
+
+</body>
+</html>
