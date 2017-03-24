@@ -1,0 +1,15 @@
+{
+  "short_name": "Photos!",
+  "name": "Online Photo Album 2k17",
+  "icons": [
+    {
+      "src":"images/bro.jpeg",
+      "sizes": "192x192",
+      "type": "image/jpeg"
+    }
+  ],
+  "start_url": "./index.html?homescreen=1",
+  "background_color": "#42a7f4",
+  "Theme_color": "#536878",
+  "display": "standalone"
+}
