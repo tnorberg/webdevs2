@@ -1,0 +1,96 @@
+<html>
+  <head>
+    <!-- Material Design Lite -->
+    <script src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://unpkg.com/dexie@latest/dist/dexie.js"></script>
+    <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.green-red.min.css">
+    <!-- Material Design icon font -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  </head>
+  <body>
+    <!-- Simple header with fixed tabs. -->
+    <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header
+                mdl-layout--fixed-tabs">  
+      <header class="mdl-layout__header">
+        <div class="mdl-layout__header-row">
+          <!-- Title -->
+          <span class="mdl-layout-title">City of Chicago City Council Info</span>
+        </div>
+        <!-- Tabs -->
+        <div class="mdl-layout__tab-bar mdl-js-ripple-effect">
+          <a href="#fixed-tab-1" class="mdl-layout__tab is-active">Search </a>
+          <a href="#fixed-tab-2" class="mdl-layout__tab">Add Employee</a>
+          <a href="#fixed-tab-3" class="mdl-layout__tab">About</a>
+        </div>
+      </header>
+      <main class="mdl-layout__content">
+        <section class="mdl-layout__tab-panel is-active" id="fixed-tab-1">
+          <div class="page-content">
+            <center><h1> <b>Search for City Council Employees Here.</b></h1>
+            <p><i>Instructions: Type the name of the City Council Employee that you would like to look up. </i> </p>
+            <input id="search" placeholder="Search Here!">
+            <button id="Submit">Submit.</button> </center>
+          </div>
+        </section>
+        <section class="mdl-layout__tab-panel" id="fixed-tab-2">
+          <div class="page-content"><form action="#">
+           <center><h1><b> Add Employee</b></h1>
+            <br>
+            <br>
+            <div class="mdl-textfield mdl-js-textfield">
+            <input class="mdl-textfield__input" type="text" id="sample1">
+            <label class="mdl-textfield__label" for="sample1">Add Employee Name Here.</label></div>
+            <div class="mdl-textfield mdl-js-textfield">
+            <input class="mdl-textfield__input" type="text" id="sample2">
+            <label class="mdl-textfield__label" for="sample1">Add Job Title Here.</label></div>
+            <div class="mdl-textfield mdl-js-textfield">
+            <input class="mdl-textfield__input" type="text" id="sample3">
+            <label class="mdl-textfield__label" for="sample1">Add Salary Here.</label></div>
+            <div class="mdl-textfield mdl-js-textfield">
+            <input class="mdl-textfield__input" type="text" id="sample4">
+            <label class="mdl-textfield__label" for="sample1">Add Department Here.</label></div>
+       </center>
+        </section>
+        <section class="mdl-layout__tab-panel" id="fixed-tab-3">
+          <div class="page-content"><center><h1><b>About This App</b></h1>
+          This app is an app used to create employees and add them to the dexie database and search for them.</center></div>
+        </section>
+      </main>
+    </div>
+<script>
+  var baseUrl = "https://data.cityofchicago.org/resource/tt4n-kn4t.json";
+  var searchUrl = baseUrl + "?" + "department=" + "CITY COUNCIL";
+  $.getJSON(searchUrl)
+
+  .done(function(data) {
+
+    console.log(data);
+
+    var db = new Dexie("employeeDB");
+    db.version(1).stores({
+      employees: '++id,name,department,title,salary'
+    });
+    db.employees.count().then(function(count) {
+      console.log(count);
+
+      if (count == 0) {
+        $.each(data, function(index, value) {
+          db.employees.add({
+            name: v.name,
+            title: v.job_titles,
+            salary: v.employee_annual_salary,
+            department: v.department
+          });
+        });
+      }
+    });
+  });
+
+  var endpoint = 'https://data.cityofchicago.org/resource/tt4n-kn4t.json?department=CITY%20COUNCIL'
+  $.getJSON(endpoint)
+    .done(function(data) console.log(data);
+    })
+</script>
+  </body>
+</html>
