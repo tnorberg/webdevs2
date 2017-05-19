@@ -58,11 +58,13 @@
               
               <select id="directions">
                 <option>Select Direction</option>
+                <option>Northbound</option>
+                <option>Eastbound</option>
+                <option>Westbound</option>
+                <option>Southbound</option>
               </select>
               
-              <select id="stops">
-                <option>Select Stop</option>
-              </select>
+              
               <button id="save">Save</button>
               </div>
         </section>
@@ -84,7 +86,7 @@
               dataType: "json",
               method: 'GET',
               data: {"apiEndpoint": apiEndpoint,
-                      "key" : "2iarWD3P3ws4fid45HWRHY4TR",
+                      "key" : "y9LTZNQjGrpDQE9Ui5YBgLCFC",
                       "format":"json"}
             }).done (function (data) {
              
@@ -125,7 +127,7 @@
                     dataType: "json",
                     method: 'GET',
                     data: {"apiEndpoint": apiEndpoint,
-                            "key" : "2iarWD3P3ws4fid45HWRHY4TR",
+                            "key" : "y9LTZNQjGrpDQE9Ui5YBgLCFC",
                             "format":"json",
                             "rt": $("#routes").val()
                     }
@@ -155,7 +157,7 @@
                     dataType: "json",
                     method: 'GET',
                     data: {"apiEndpoint": apiEndpoint,
-                            "key" : "2iarWD3P3ws4fid45HWRHY4TR",
+                            "key" : "y9LTZNQjGrpDQE9Ui5YBgLCFC",
                             "format":"json",
                             "rt": $("#routes").val(),
                             "dir": $("#directions").val()
@@ -174,26 +176,6 @@
         });
     });
   
-</script>
-<script>
-var routes = [];
-var stops = [];
-      routes.push("15");
-      routes.push("27");
-      routes.push("49");  
-      $(function() {
-    $(".delete").on("click", function() {
-          var itemId = $(this).attr("id");
-          alert (itemId);
-        });
-          
-        });
-
-   var db = new Dexie("busDB");
-          db.version(1).stores({
-              route: '++id,routeId,routeName,direction,stopId,stopName,datetime'
-          });
-          
 </script>
   </body>
 </html>
